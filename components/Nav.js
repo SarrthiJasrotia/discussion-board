@@ -9,11 +9,11 @@ export default function Nav() {
     const [user, loading] = useAuthState(auth)
 
 
-    // console.log("user",user)
+    console.log("user",user)
     return (
         <nav className="flex justify-between item-center py-10">
             <Link href="/">
-                <button className="text-lg font-medium">Discussion Board</button>
+                <button className="text-2xl font-medium">Discussion Board</button>
             </Link>
             <ul className="flex items-center gap-10">
 
@@ -30,7 +30,7 @@ export default function Nav() {
                     </Link>
 
                     <Link href="/dashboard">
-                        <img src={user.photoURL} className="rounded-2xl"/>
+                        <img src={user.photoURL} className="w-12 rounded-full border-2"/>
                     </Link>
 
                 </div>)}
