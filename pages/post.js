@@ -1,10 +1,13 @@
 import { useAuthState} from "react-firebase-hooks/auth";
 import {auth,db} from "../utils/firebase";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect,useState } from "react";
-
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 export default function Post(){
+    const route = useRouter()
+    const [user,loading] = useAuthState(auth);
     // state of the form
     const [post,setPost] = useState({description:""})
    
@@ -12,15 +15,41 @@ export default function Post(){
 
     const submitPost = async (e)=> {
         e.preventDefault();
-    }
+
+
+        //make sure it fits the requirements
+        if (!post.description){
+            toast.error('Description cannot be left blank');
+
+            return;
+        }
+        if (!post.description.length > 300){
+            toast.error('Description exeeds the charater limit');
+            
+            return;
+        }
+        
+        
+        //new post
+        const  collectionRef = collection(db, 'posts')
+        await addDoc(collectionRef, {
+            ...post,
+            timestamp: serverTimestamp(),
+            user: user.uid,
+            pfp: user.photoURL,
+            username: user.displayName,
+        });
+        setPost({ description:""});
+        return Router.push("/")
+    };
     return(
         <div className="my-20 p-12 border-2 rounded max-w-md mx-auto ">
             <form onSubmit={submitPost}>
                 <h1>New Post</h1>
                 <div>
                     <h3>Description</h3>
-                    <textarea value={post.description} onChange={(e) =>setPost({...post,description: e.target.value})} className="bg-yellow-500 h-48 w-full text-white rounded-lg p-2"></textarea>
-                    <p>{post.description.length}/300</p>
+                    <textarea value={post.description} onChange={(e) =>setPost({...post,description: e.target.value}) } className="bg-yellow-500 h-48 w-full text-white rounded-lg p-2"></textarea>
+                    <p className={`text-white ${post.description.length > 300 ? 'text-red-500' :""}`}> {post.description.length}/300</p>
                 </div>
                 <button type="submit" className="w-full bg-red-500 rounded-md p-2 my-2">Submit</button>
             </form>
