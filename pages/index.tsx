@@ -14,11 +14,9 @@ export default function Home() {
       </Head>
 
 
-      
-      <main>
-
-        
-      </main>
+      <div className='my-12 text-lg font-medium'>
+      <h2 className='text-2xl text-center'> All posts</h2>
+      </div>
     </>
   )
 }
