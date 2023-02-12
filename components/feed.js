@@ -1,4 +1,4 @@
-export default function Feed(){
+export default function Feed({children}){
     return(
         <div>
             <div>
