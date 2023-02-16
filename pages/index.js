@@ -14,13 +14,17 @@ export default function Home() {
     const collectionRef = collection(db,'posts');
     const q = query(collectionRef, orderBy('timestamp','desc'));
     const unsubscribe = onSnapshot(q,(snapshot)=>{
-      setAllPosts(snapshot.docs.map((doc) => ({ ...doc.data() })));
+      setAllPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         
     })
     return unsubscribe;
-  
-  
-  }
+  };
+
+  useEffect(()=> {
+    getPosts();
+  },[]);
+
+
   return (
     <>
       <Head>
@@ -33,6 +37,10 @@ export default function Home() {
 
       <div className='my-12 text-lg font-medium'>
       <h2 className='text-2xl text-center'> All posts</h2>
+      {allposts.map((post) => (
+      <Feed {...post}></Feed>
+      )
+      )}
       
       
       </div>
