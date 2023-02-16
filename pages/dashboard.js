@@ -4,12 +4,14 @@ import { useRouter } from "next/router";
 import { async } from "@firebase/util";
 import { useEffect,useState } from "react";
 import {collection, onSnapshot, query, where} from "firebase/firestore";
-
+import Feed from "../components/feed";
+import {BsTrash2Fill} from "react-icons/bs";
+import {AiFillEdit} from "react-icons/ai";
 
 export default function Dashboard(){
     const route = useRouter();
     const [user,loading]= useAuthState(auth);
-    const  [posts, setPosts] = useState([])
+    const  [posts, setPosts] = useState([]);
 
     const getData =async () =>{
         if (loading) return;
@@ -17,8 +19,9 @@ export default function Dashboard(){
         const collectionRef = collection(db, 'posts');
         const q = query(collectionRef, where('user','==',user.uid))
         const unsubscribe = onSnapshot(q, (snapshot =>{
-            setPosts
+            setPosts(snapshot.docs.map((doc)=> ({...doc.data(), id:doc.id})))
         }))
+        return unsubscribe;
     }
    
 
@@ -30,8 +33,17 @@ export default function Dashboard(){
     return (
         <div>
             <h1> My posts</h1>
-            <div></div>
-            <button onClick={() => auth.signOut()}>Log Out</button>
+            <div>{posts.map((post) => {
+                return (
+                <Feed {...post} key={post.id}>
+                    <div className="flex gap-4">
+                        <button className="text-red-500 flex items-center justify-center text-xs"> <BsTrash2Fill className="text-xl"/> Delete</button>
+                        <button className="text-yellow-500 flex items-center justify-center text-xs"><AiFillEdit className="text-xl"/>Edit</button>
+                    </div>
+                </Feed>
+            );
+            })}</div>
+            <button className="font-medium text-white bg-gray-800 py-2 px-4 my-8 rounded" onClick={() => auth.signOut()}>Log Out</button>
         </div>
     )
 }
