@@ -1,8 +1,8 @@
 export default function Feed({children, pfp, username, description}){
     return(
-        <div>
-            <div className="flex items-center">
-                <img src={pfp} className="w-10 rounded-full" />
+        <div className="py-4 m-10">
+            <div className="flex items-center ">
+                <img src={pfp} className="m-2 w-10 rounded-full border-2" />
                 <h2> {username} </h2>
             </div>
             <div className="py-4">
