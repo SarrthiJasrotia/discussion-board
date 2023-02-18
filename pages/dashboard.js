@@ -46,7 +46,7 @@ export default function Dashboard(){
                 <Feed {...post} key={post.id}>
                     <div className="flex gap-4">
                         <button onClick={ ()=> deletePost(post.id)} className="text-red-500 flex items-center justify-center text-xs"> <BsTrash2Fill className="text-xl"/> Delete</button>
-                        <Link href={{ pathname: "/post" }}>
+                        <Link href={{ pathname: "/post" , query: post}}>
                            <button className="text-yellow-500 flex items-center justify-center text-xs"><AiFillEdit className="text-xl"/>Edit</button>
                         </Link>
                     </div>

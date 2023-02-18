@@ -4,9 +4,11 @@ import Router, { useRouter } from "next/router";
 import { useEffect,useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { updateDefaultClause } from "typescript";
 
 export default function Post(){
-    const route = useRouter()
+    const route = useRouter();
+    const routeData = route.query;
     const [user,loading] = useAuthState(auth);
     // state of the form
     const [post,setPost] = useState({description:""})
@@ -42,6 +44,20 @@ export default function Post(){
         setPost({ description:""});
         return Router.push("/")
     };
+
+    //edit
+    const checkUser = async () => {
+        if (loading) return;
+        if (!user) return route.push("/auth/login");
+        if (routeData.id){
+            setPost({description: routeData.description, id: routeData.id})
+        }
+    };
+
+    useEffect(() =>{
+        checkUser();
+    }, [user,loading]);
+
     return(
         <div className="my-20 p-12 border-2 rounded max-w-md mx-auto ">
             <form onSubmit={submitPost}>
