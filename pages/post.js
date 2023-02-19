@@ -2,7 +2,7 @@ import { useAuthState} from "react-firebase-hooks/auth";
 import {auth,db} from "../utils/firebase";
 import Router, { useRouter } from "next/router";
 import { useEffect,useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc,addDoc, collection, serverTimestamp, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { updateDefaultClause } from "typescript";
 
@@ -31,6 +31,13 @@ export default function Post(){
             return;
         }
         
+        if(post?.hasOwnProperty("id")){
+            const docRef = doc(db, 'posts',post.id);
+            const updatedPost = {...post, timestamp: serverTimestamp()};
+            await updateDoc(docRef, updatedPost);
+            return route.push('/')
+
+        }else{
         
         //new post
         const  collectionRef = collection(db, 'posts')
@@ -42,7 +49,9 @@ export default function Post(){
             username: user.displayName,
         });
         setPost({ description:""});
-        return Router.push("/")
+        toast.success("New post was made")
+        return Router.push("/");
+    }
     };
 
     //edit
