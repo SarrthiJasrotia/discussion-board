@@ -10,7 +10,7 @@ import { useEffect } from "react";
 export default function Login(){
 
     //using this to reroute pages
-        
+        const route =  useRouter();
         const [user, loading] = useAuthState(auth);
     //goolgle sign code
     const googleProvider = new GoogleAuthProvider();
@@ -24,7 +24,7 @@ export default function Login(){
     };
 
     useEffect(() => {
-        const route =  useRouter();
+        
 
         if(user){
             route.push("/")
