@@ -10,7 +10,7 @@ import { useEffect } from "react";
 export default function Login(){
 
     //using this to reroute pages
-        const route =  useRouter();
+        
         const [user, loading] = useAuthState(auth);
     //goolgle sign code
     const googleProvider = new GoogleAuthProvider();
@@ -21,15 +21,18 @@ export default function Login(){
         } catch (error) {
             console.log(error)
         }
-    }
+    };
 
-    useEffect(() =>{
+    useEffect(() => {
+        const route =  useRouter();
+
         if(user){
             route.push("/")
         }else{
             console.log("login")
         }
     },[user])
+
     return(
         <div className="border-4 mt-32 p-10 text-white-700 rounded-lg">
             <h2 className="text-2xl font-medium text-center">Sign in options</h2>
