@@ -61,7 +61,7 @@ export default function Post(){
     return(
         <div className="my-20 p-12 border-2 rounded max-w-md mx-auto ">
             <form onSubmit={submitPost}>
-                <h1>New Post</h1>
+                <h1 className="text-xl text-center">{post.hasOwnProperty('id') ? "Edit Post" : "New Post"}</h1>
                 <div>
                     <h3>Description</h3>
                     <textarea value={post.description} onChange={(e) =>setPost({...post,description: e.target.value}) } className="bg-yellow-500 h-48 w-full text-white rounded-lg p-2"></textarea>
