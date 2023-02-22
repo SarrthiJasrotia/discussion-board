@@ -41,7 +41,8 @@ export default function Home() {
       <Feed {...post}>
 
         <Link href={{pathname:`/${post.id}`,query:{...post}}}>
-          <button>comments</button>
+          <div className='text-center'>
+          <button className=' pl-5 pr-5 text-sm bg-red-500 rounded'>comments</button></div>
         </Link>
       </Feed>
       )
