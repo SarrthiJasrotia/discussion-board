@@ -35,10 +35,11 @@ export default function Home() {
       </Head>
 
 
-      {/* <div className='my-12 text-lg font-medium'>
+      <div className='my-12 text-lg font-medium'>
       <h2 className='text-2xl text-center'> All posts</h2>
+      
       {allposts.map((post) => (
-      <Feed {...post}>
+      <Feed {...post} key={post.id}>
 
         <Link href={{pathname:`/${post.id}`,query:{...post}}}>
           <div className='text-center'>
@@ -49,7 +50,7 @@ export default function Home() {
       )}
       
       
-      </div> */}
+      </div>
     </>
   )
 }
