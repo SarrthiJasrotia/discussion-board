@@ -42,7 +42,7 @@ export default function Home() {
 
         <Link href={{pathname:`/${post.id}`,query:{...post}}}>
           <div className='text-center'>
-          <button className=' pl-5 pr-5 text-sm bg-red-500 rounded'>comments</button></div>
+          <button className=' pl-5 pr-5 text-sm bg-red-500 rounded'> {post.comments?.length > 0 ? post.comments?.length : 0} comments</button></div>
         </Link>
       </Feed>
       )
