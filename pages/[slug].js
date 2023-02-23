@@ -77,10 +77,10 @@ export default function Details() {
             Submit
           </button>
         </div>
-        <div className="py-6">
+        <div className="py-">
           <h2 className="font-bold">Comments</h2>
           {allMessage?.map((message) => (
-            <div className="py-4 m-10 border-b-4 rounded p-2" key={message.time}>
+            <div className="py-4 m-10 border-b-4 rounded p-2 break-words" key={message.time}>
               <div className="flex items-center gap-2 mb-4">
                 <img
                   className="w-10 rounded-full"
